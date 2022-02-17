@@ -3,6 +3,14 @@
 # This script is meant to be used to install a new Drupal site that is used to run on multiple stages.
 # This will install the Drupal site and import the site structure from the configuration files.
 # We are using same UUID to import same configurations.
+#
+# Script usage:
+# $ ./drupal-install.php DB_NAME
+#
+# Suggested usage:
+# $ ./drupal-install.php drupal_dev
+# $ ./drupal-install.php drupal_test
+# $ ./drupal-install.php PROJECTNAME_ENVIRONMENTNAME
 #####
 
 echo "██████ Salam! Please take a rest this process will take around 5-7 minutes ██████"
