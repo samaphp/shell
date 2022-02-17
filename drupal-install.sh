@@ -5,12 +5,12 @@
 # We are using same UUID to import same configurations.
 #
 # Script usage:
-# $ ./drupal-install.php DB_NAME
+# $ ./drupal-install.sh DB_NAME
 #
 # Suggested usage:
-# $ ./drupal-install.php drupal_dev
-# $ ./drupal-install.php drupal_test
-# $ ./drupal-install.php PROJECTNAME_ENVIRONMENTNAME
+# $ ./drupal-install.sh drupal_dev
+# $ ./drupal-install.sh drupal_test
+# $ ./drupal-install.sh PROJECTNAME_ENVIRONMENTNAME
 #####
 
 echo "██████ Salam! Please take a rest this process will take around 5-7 minutes ██████"
