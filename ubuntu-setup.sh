@@ -33,3 +33,4 @@ sudo apt-get autoremove -y --purge docker docker.io
 sudo rm -rf /var/run/docker.sock
 sudo apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli
 sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce  
+sudo rm -rf /var/lib/docker/volumes && sudo rm -rf /var/lib/docker/trust && sudo rm -rf /var/lib/docker/tmp && sudo rm -rf /var/lib/docker/swarm && sudo rm -rf /var/lib/docker/runtimes && sudo rm -rf /var/lib/docker/plugins && sudo rm -rf /var/lib/docker/network && sudo rm -rf /var/lib/docker/image && sudo rm -rf /var/lib/docker/containers && sudo rm -rf /var/lib/docker/buildkit
