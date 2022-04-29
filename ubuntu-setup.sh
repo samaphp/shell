@@ -16,3 +16,8 @@ curl https://build.opensuse.org/projects/home:manuelschneid3r/public_key | sudo 
 #sudo wget -nv https://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_22.04/Release.key -O "/etc/apt/trusted.gpg.d/home:manuelschneid3r.asc"
 sudo apt update
 sudo apt install albert
+
+# Remove docker
+sudo apt-get purge -y docker docker.io
+sudo apt-get autoremove -y --purge docker docker.io
+sudo rm -rf /var/run/docker.sock
