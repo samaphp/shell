@@ -26,7 +26,10 @@ curl https://build.opensuse.org/projects/home:manuelschneid3r/public_key | sudo 
 sudo apt update
 sudo apt install albert
 
+exit
 # Remove docker
 sudo apt-get purge -y docker docker.io
 sudo apt-get autoremove -y --purge docker docker.io
 sudo rm -rf /var/run/docker.sock
+sudo apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli
+sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce  
