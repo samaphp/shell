@@ -5,7 +5,16 @@ sudo snap install slack --classic
 sudo snap install spotify
 sudo snap install phpstorm --classic
 sudo snap install code --classic
-sudo apt install docker.io -y
+
+# Install docker
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+apt-cache policy docker-ce
+sudo apt install docker-ce
+sudo systemctl status docker
+#sudo apt install docker.io -y
 wget https://files.lando.dev/installer/lando-x64-stable.deb
 sudo dpkg -i --ignore-depends=docker-ce lando-x64-stable.deb
 sudo rm -rf lando-x64-stable.deb
