@@ -14,7 +14,6 @@ sudo apt update
 apt-cache policy docker-ce
 sudo apt install docker-ce
 sudo systemctl status docker
-#sudo apt install docker.io -y
 wget https://files.lando.dev/installer/lando-x64-stable.deb
 sudo dpkg -i lando-x64-stable.deb
 sudo rm -rf lando-x64-stable.deb
@@ -26,17 +25,14 @@ curl https://build.opensuse.org/projects/home:manuelschneid3r/public_key | sudo 
 sudo apt update
 sudo apt install albert
 
-exit
-# Remove docker
-sudo apt-get purge -y docker docker.io
-sudo apt-get autoremove -y --purge docker docker.io
-sudo rm -rf /var/run/docker.sock
+## Remove docker
+# sudo apt-get purge -y docker docker.io
+# sudo apt-get autoremove -y --purge docker docker.io
+# sudo rm -rf /var/run/docker.sock
 
-
-
-
-sudo apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli
-sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce  
-sudo rm -rf /var/lib/docker/volumes && sudo rm -rf /var/lib/docker/trust && sudo rm -rf /var/lib/docker/tmp && sudo rm -rf /var/lib/docker/swarm && sudo rm -rf /var/lib/docker/runtimes && sudo rm -rf /var/lib/docker/plugins && sudo rm -rf /var/lib/docker/network && sudo rm -rf /var/lib/docker/image && sudo rm -rf /var/lib/docker/containers && sudo rm -rf /var/lib/docker/buildkit
-sudo apt install docker-ce && sudo systemctl status docker
-wget https://files.lando.dev/installer/lando-x64-stable.deb && sudo dpkg -i lando-x64-stable.deb && sudo rm -rf lando-x64-stable.deb
+## Quick re-install docker (data loss)
+# sudo apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli
+# sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce  
+# sudo rm -rf /var/lib/docker/volumes && sudo rm -rf /var/lib/docker/trust && sudo rm -rf /var/lib/docker/tmp && sudo rm -rf /var/lib/docker/swarm && sudo rm -rf /var/lib/docker/runtimes && sudo rm -rf /var/lib/docker/plugins && sudo rm -rf /var/lib/docker/network && sudo rm -rf /var/lib/docker/image && sudo rm -rf /var/lib/docker/containers && sudo rm -rf /var/lib/docker/buildkit
+# sudo apt install docker-ce && sudo systemctl status docker
+# wget https://files.lando.dev/installer/lando-x64-stable.deb && sudo dpkg -i lando-x64-stable.deb && sudo rm -rf lando-x64-stable.deb
