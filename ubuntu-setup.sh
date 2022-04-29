@@ -16,7 +16,7 @@ sudo apt install docker-ce
 sudo systemctl status docker
 #sudo apt install docker.io -y
 wget https://files.lando.dev/installer/lando-x64-stable.deb
-sudo dpkg -i --ignore-depends=docker-ce lando-x64-stable.deb
+sudo dpkg -i lando-x64-stable.deb
 sudo rm -rf lando-x64-stable.deb
 
 # Albert
