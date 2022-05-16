@@ -5,6 +5,7 @@ sudo snap install slack --classic
 sudo snap install spotify
 sudo snap install phpstorm --classic
 sudo snap install code --classic
+sudo snap install notion-snap
 
 # Install docker
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
