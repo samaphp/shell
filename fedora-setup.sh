@@ -10,6 +10,8 @@ sudo snap install slack --classic
 sudo snap install spotify
 sudo snap install phpstorm --classic
 sudo snap install code --classic
+sudo snap install evernote-web-client
+sudo snap install notion-snap
 
 # Docker installation
 sudo dnf -y install dnf-plugins-core
