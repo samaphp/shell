@@ -1,10 +1,13 @@
 #/bin/sh
 # My Ubuntu setup script
+
+# Basic apps
 sudo apt install git
 sudo snap install slack --classic
 sudo snap install spotify
 sudo snap install phpstorm --classic
 sudo snap install code --classic
+sudo snap install evernote-web-client
 sudo snap install notion-snap
 
 # Install docker
