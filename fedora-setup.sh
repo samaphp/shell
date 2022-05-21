@@ -22,6 +22,7 @@ sudo dnf install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 wget https://files.lando.dev/installer/lando-x64-stable.rpm
 sudo dnf install lando-x64-stable.rpm -y
 sudo rm -rf lando-x64-stable.rpm
+sudo usermod -a -G docker $USER $ exit
 lando --channel stable
 
 # Albert
