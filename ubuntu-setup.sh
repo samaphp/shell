@@ -22,6 +22,7 @@ wget https://files.lando.dev/installer/lando-x64-stable.deb
 sudo dpkg -i lando-x64-stable.deb
 sudo rm -rf lando-x64-stable.deb
 sudo usermod -a -G docker $USER $ exit
+lando --channel stable
 
 # Install Google Chrome
 sudo apt-get install libxss1 libappindicator1 libindicator7
