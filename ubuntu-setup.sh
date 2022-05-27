@@ -42,6 +42,9 @@ sudo apt install gcc make
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/510.68.02/NVIDIA-Linux-x86_64-510.68.02.run
 sudo bash NVIDIA-Linux-x86_64-510.68.02.run 
 
+# Remove sudo password
+sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
+
 ## Remove docker
 # sudo apt-get purge -y docker docker.io
 # sudo apt-get autoremove -y --purge docker docker.io
