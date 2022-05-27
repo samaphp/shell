@@ -45,6 +45,15 @@ sudo bash NVIDIA-Linux-x86_64-510.68.02.run
 # Remove sudo password
 sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
+# Install and configure zsh
+#sudo apt install zsh -y
+#git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+#echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+#git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+#echo 'source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh' >> ~/.zshrc
+#echo 'alias ll="ls -lha"' >>~/.zshrc
+#sudo chsh -s $(which zsh)
+
 ## Remove docker
 # sudo apt-get purge -y docker docker.io
 # sudo apt-get autoremove -y --purge docker docker.io
