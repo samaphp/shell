@@ -66,4 +66,10 @@ sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 # sudo apt install docker-ce && sudo systemctl status docker
 # wget https://files.lando.dev/installer/lando-x64-stable.deb && sudo dpkg -i lando-x64-stable.deb && sudo rm -rf lando-x64-stable.deb
 
+## If you ran into Ctrl+Arrow issue in terminal you may need to add these two lines into ~/.bashrc
+## https://unix.stackexchange.com/questions/58870/ctrl-left-right-arrow-keys-issue
+#bindkey "^[[1;5D" backward-word
+#bindkey "^[[1;5C" forward-word
+
+
 echo "██████ You may need to reboot your machine to make Lando work properly ██████"
