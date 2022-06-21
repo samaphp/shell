@@ -16,9 +16,9 @@ cd /var/www/html/$1
 echo "Pulling changes from git repo .."
 git pull
 echo "Installing composer .."
-composer install
+composer install --no-interaction --no-dev
 ./vendor/bin/drush cim -y
-./vendor/bin/drush cim -y # duplicated to fix configuration sequence issue.
+./vendor/bin/drush cim -y # duplicated to fix configuration sequence issue if.
 ./vendor/bin/drush locale-check
 ./vendor/bin/drush locale-update
 ./vendor/bin/drush cr
