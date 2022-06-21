@@ -19,6 +19,7 @@ echo "Installing composer .."
 composer install --no-interaction --no-dev
 ./vendor/bin/drush cim -y
 ./vendor/bin/drush cim -y # duplicated to fix configuration sequence issue if.
+./vendor/bin/drush updb -y
 ./vendor/bin/drush locale-check
 ./vendor/bin/drush locale-update
 ./vendor/bin/drush cr
