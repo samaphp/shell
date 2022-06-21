@@ -2,11 +2,23 @@
 # Script to clone and run a new website for local environment using land abracadabra custom command.
 # Author: Saud
 
-echo 'Please enter the project name:'
-read _projectName
+if [[ "$1" == '' ]] ;
+  then
+    echo 'Please enter the project name (oerx|certx|dnax):'
+    read _projectName
+  else
+    _projectName=$1
+    echo "Project name is: $_projectName"
+fi
 
-echo 'Please enter the branch name (no-spaces-please):'
-read _branchName
+if [[ "$2" == '' ]] ;
+  then
+    echo 'Please enter the branch name (no-spaces-please):'
+    read _branchName
+  else
+    _branchName=$2
+    echo "Branch name is: $_branchName"
+fi
 
 echo "██████ STARTING installation process ██████"
 git clone git@git.saud.lab:drupal/$_projectName/project.git $_branchName
