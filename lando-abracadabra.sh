@@ -1,6 +1,14 @@
 #!/bin/bash
-# Script to clone and run a new website for local environment using land abracadabra custom command.
-# Author: Saud
+# Author: Saud bin Mohammed
+# Script to clone and run a new website for local environment using lando abracadabra custom command.
+# 1. Clone project (parameter 1)
+# 1. Create a new branch (parameter 2)
+# 1. Change Lando machine name
+# 1. Change proxy domain name
+# 1. Add new domain to your /etc/hosts file
+# 1. Start Lando
+# 1. Run Lando abracadabra (please refer to: https://github.com/samaphp/lando/blob/e13088238054b40c58bbb2d45e6ec937f0f5587c/.lando.yml#L16 )
+# 1. Print site URL with a one time login URL at the end
 
 if [[ "$1" == '' ]] ;
   then
@@ -13,7 +21,7 @@ fi
 
 if [[ "$2" == '' ]] ;
   then
-    echo 'Please enter the branch name (no-spaces-please):'
+    echo 'Please enter the branch name (no-spaces-please) short as much as you can:'
     read _branchName
   else
     _branchName=$2
