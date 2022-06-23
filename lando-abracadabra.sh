@@ -4,7 +4,7 @@
 
 if [[ "$1" == '' ]] ;
   then
-    echo 'Please enter the project name (oerx|certx|dnax):'
+    echo 'Please enter the project name:'
     read _projectName
   else
     _projectName=$1
