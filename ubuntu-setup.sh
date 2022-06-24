@@ -70,7 +70,7 @@ sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 ## https://unix.stackexchange.com/questions/58870/ctrl-left-right-arrow-keys-issue
 #bindkey "^[[1;5D" backward-word
 #bindkey "^[[1;5C" forward-word
-
+# Check all available bindings in: `bindkey | grep backward-kill-line`
 
 # Alt+h : when you already wrote the command it will show the help
 # Alt+d : will delete the next word only
