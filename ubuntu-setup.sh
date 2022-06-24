@@ -72,4 +72,7 @@ sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 #bindkey "^[[1;5C" forward-word
 
 
+# Alt+h : when you already wrote the command it will show the help
+# Alt+d : will delete the next word only
+
 echo "██████ You may need to reboot your machine to make Lando work properly ██████"
