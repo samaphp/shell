@@ -28,6 +28,10 @@ if [[ "$2" == '' ]] ;
     echo "Branch name is: $_branchName"
 fi
 
+# NOTE: we may need to convert all UPPERCASE chars to lowercase.
+#_projectName=${_projectName:0:20}
+#_projectName=$(echo $_projectName | tr '[:upper:]' '[:lower:]')
+
 echo "██████ STARTING installation process ██████"
 git clone git@git.saud.lab:drupal/$_projectName/project.git $_branchName
 echo "... project has been cloned successfully"
