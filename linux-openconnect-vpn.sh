@@ -1,6 +1,7 @@
 #!/bin/bash
 # Author: Saud bin Mohammed
 # Connect to GlobalProtect using openconnect command
+# wget https://raw.githubusercontent.com/samaphp/shell/main/linux-openconnect-vpn.sh
 
 _userName=''
 _gatewayIp=''
