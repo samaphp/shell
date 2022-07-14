@@ -39,6 +39,7 @@ sudo apt install albert -y
 
 # Install some useful cli tools
 sudo apt install btop
+sudo apt install netdiscover # USAGE: # sudo netdiscover -r 192.168.0.1/16
 
 # Install NVIDIA driver.
 sudo apt install gcc make
