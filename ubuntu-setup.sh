@@ -37,6 +37,9 @@ curl https://build.opensuse.org/projects/home:manuelschneid3r/public_key | sudo 
 sudo apt update
 sudo apt install albert -y
 
+# Install some useful cli tools
+sudo apt install btop
+
 # Install NVIDIA driver.
 sudo apt install gcc make
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/510.68.02/NVIDIA-Linux-x86_64-510.68.02.run
