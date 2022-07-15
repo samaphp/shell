@@ -83,12 +83,6 @@ server {
         fastcgi_intercept_errors on;
         fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
     }
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|eot|ttf)\$ {
-        add_header Access-Control-Allow-Origin * always;
-        try_files \$uri @rewrite;
-        expires max;
-        log_not_found off;
-    }
 }
 END
 ln -s /etc/nginx/sites-enabled/${WEBSITE}.conf /etc/nginx/sites-available/
