@@ -25,9 +25,6 @@ mv composer.phar /usr/local/bin/composer
 adduser "$USERNAME" sudo >/dev/null
 adduser "$USERNAME" www-data >/dev/null
 adduser www-data "$USERNAME" >/dev/null
-apt-get update
-apt-get install composer
-apt install composer
 ################
 # Webserver
 # You can clone from the project repo here, if you want to automate app installation
