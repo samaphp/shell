@@ -44,6 +44,10 @@ sudo apt install netdiscover # USAGE: # sudo netdiscover -r 192.168.0.1/16
 sudo apt install net-tools # ifconfig command
 sudo apt install tree # tree command
 
+# install nala
+#echo "deb https://deb.volian.org/volian/ scar main" | sudo tee /etc/apt/sources.list.d/volian-archive-scar-unstable.list
+#wget -qO - https://deb.volian.org/volian/scar.key | sudo tee /etc/apt/trusted.gpg.d/volian-archive-scar-unstable.gpg > /dev/null
+
 # Install NVIDIA driver.
 sudo apt install gcc make
 wget https://us.download.nvidia.com/XFree86/Linux-x86_64/510.68.02/NVIDIA-Linux-x86_64-510.68.02.run
