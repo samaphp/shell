@@ -16,12 +16,6 @@ apt install qemu-guest-agent
 # This assume the user is already added, if not please adduser it
 USERNAME="username"
 
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-php composer-setup.php
-php -r "unlink('composer-setup.php');"
-mv composer.phar /usr/local/bin/composer
-
 adduser "$USERNAME" sudo >/dev/null
 adduser "$USERNAME" www-data >/dev/null
 adduser www-data "$USERNAME" >/dev/null
@@ -109,3 +103,9 @@ sed -i -e 's/upload_max_filesize = 2M$/upload_max_filesize = 80M/g' /etc/php/8.1
 sed -i -e 's/post_max_size = 8M$/post_max_size = 80M/g' /etc/php/8.1/fpm/php.ini
 sed -i -e 's/;max_input_vars = 1000$/max_input_vars = 10000/g' /etc/php/8.1/fpm/php.ini
 systemctl restart php8.1-fpm.service
+
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+mv composer.phar /usr/local/bin/composer
