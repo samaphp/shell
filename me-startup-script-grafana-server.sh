@@ -93,8 +93,62 @@ sudo systemctl start prometheus
 
 #sudo ufw allow 9090/tcp
 
-# Installation cleanup
+# Prometheus installation cleanup
 rm prometheus-${VERSION}.linux-amd64.tar.gz
 rm -rf prometheus-${VERSION}.linux-amd64
 
-# .... still working on next configuration
+
+############################################################
+# Installing Alertmanager
+############################################################
+# Source: https://github.com/petarnikolovski/prometheus-install/blob/master/alertmanager.sh
+# Source: https://linuxhint.com/install-configure-prometheus-alert-manager-ubuntu/
+
+# Make alertmanager user
+sudo adduser --no-create-home --disabled-login --shell /bin/false --gecos "Alertmanager User" alertmanager
+
+# Make directories and dummy files necessary for alertmanager
+sudo mkdir /etc/alertmanager
+sudo mkdir /etc/alertmanager/template
+sudo mkdir -p /var/lib/alertmanager/data
+sudo touch /etc/alertmanager/alertmanager.yml
+sudo chown -R alertmanager:alertmanager /etc/alertmanager
+sudo chown -R alertmanager:alertmanager /var/lib/alertmanager
+
+# Download alertmanager and copy utilities to where they should be in the filesystem
+# https://github.com/prometheus/alertmanager/releases checkout available releases
+VERSION=0.24.0
+wget https://github.com/prometheus/alertmanager/releases/download/v${VERSION}/alertmanager-${VERSION}.linux-amd64.tar.gz
+tar xvzf alertmanager-${VERSION}.linux-amd64.tar.gz
+sudo cp alertmanager-${VERSION}.linux-amd64/alertmanager /usr/local/bin/
+sudo cp alertmanager-${VERSION}.linux-amd64/amtool /usr/local/bin/
+sudo chown alertmanager:alertmanager /usr/local/bin/alertmanager
+sudo chown alertmanager:alertmanager /usr/local/bin/amtool
+
+# Populate configuration files
+cat ./alertmanager-${VERSION}.linux-amd64/alertmanager.yml | sudo tee /etc/alertmanager/alertmanager.yml
+#cat ./alertmanager-${VERSION}.linux-amd64/alertmanager.service | sudo tee /etc/systemd/system/alertmanager.service
+sudo tee /etc/systemd/system/alertmanager.service<<EOF
+[Unit]
+Description=Alertmanager for prometheus
+
+[Service]
+Restart=always
+User=prometheus
+ExecStart=/opt/alertmanager/alertmanager --config.file=/opt/alertmanager/alertmanager.yml --storage.path=/opt/alertmanager/data            
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=20s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# systemd
+sudo systemctl daemon-reload
+sudo systemctl enable alertmanager
+sudo systemctl start alertmanager
+
+# Alertmanager installation cleanup
+rm alertmanager-${VERSION}.linux-amd64.tar.gz
+rm -rf alertmanager-${VERSION}.linux-amd64
