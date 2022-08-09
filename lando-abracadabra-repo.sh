@@ -92,14 +92,14 @@ if [[ "$_installationType" == 1 ]] ;
 fi
 
 # requiring some recommended packages
-lando composer require drupal/admin_toolbar drupal/devel drush/drush -n
+lando composer require drupal/admin_toolbar drupal/devel drush/drush drupal/masquerade -n
 echo 'the recommended packages has been downloaded'
 
 # start installing Drupal website
 lando drush si standard --db-url=mysql://drupal9:drupal9@database:3306/drupal9 --site-name=automated -y --account-pass=admin -y
 echo 'Drupal website has been installed successfully'
 
-lando drush en admin_toolbar_tools devel -y
+lando drush en admin_toolbar_tools devel masquerade -y
 lando drush pmu update -y
 chmod -R 0777 web/sites/default
 
