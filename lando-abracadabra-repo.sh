@@ -92,7 +92,7 @@ if [[ "$_installationType" == 1 ]] ;
 fi
 
 # requiring some recommended packages
-lando composer require drupal/admin_toolbar drupal/devel drush/drush drupal/masquerade -n
+lando composer require drupal/admin_toolbar drupal/devel drush/drush drupal/masquerade:2.x-dev -n
 echo 'the recommended packages has been downloaded'
 
 # start installing Drupal website
