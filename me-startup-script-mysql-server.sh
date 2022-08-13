@@ -16,3 +16,7 @@ sed -i "s/127.0.0.1/0.0.0.0/" /etc/mysql/mariadb.conf.d/50-server.cnf
 systemctl restart mariadb.service
 
 # netstat -ant | grep 3306
+
+# since root is not allowed from remote source, you may want to create a new user.
+#CREATE USER 'SOME_USER'@'%' IDENTIFIED BY 'SOME_PASSWORD';
+#GRANT ALL PRIVILEGES ON *.* TO 'SOME_USER'@'%';
