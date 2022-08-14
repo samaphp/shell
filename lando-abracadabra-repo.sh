@@ -3,6 +3,10 @@
 # Script to clone and run a new website for local environment from a git repository.
 # The script will prompt a two questions (1. type of the installation) (2. the git repo URL)
 
+# Todo
+# - handle exceptions in the installation process in case of any errors like minimum-stability issues
+# - require all module dependencies
+
 _print_type_name () {
   _typeName='unknown'
   if [[ "$_installationType" == 1 ]] ;
