@@ -91,6 +91,8 @@ if [[ "$_installationType" == 1 ]] ;
     cd ..
 fi
 
+sed -i "/\"minimum-stability\"/c\    \"minimum-stability\"\: \"dev\"\," composer.json
+
 # requiring some recommended packages
 lando composer require drupal/admin_toolbar drupal/devel drush/drush drupal/masquerade:2.x-dev -n
 echo 'the recommended packages has been downloaded'
