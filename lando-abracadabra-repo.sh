@@ -114,6 +114,8 @@ sh -c "echo '\$config['\''system.logging'\'']['\''error_level'\''] = '\''verbose
 sh -c "echo '\$config['\''system.performance'\'']['\''css'\'']['\''preprocess'\''] = FALSE;' >> web/sites/default/settings.php"
 sh -c "echo '\$config['\''system.performance'\'']['\''js'\'']['\''preprocess'\''] = FALSE;' >> web/sites/default/settings.php"
 lando drush cset devel.settings devel_dumper var_dumper -y
+lando drush theme:enable bartik -y
+lando drush config-set system.theme default bartik -y
 lando drush cr
 
 # create demo users
