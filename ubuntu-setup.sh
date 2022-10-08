@@ -11,6 +11,7 @@ sudo snap install code --classic
 sudo snap install evernote-web-client
 sudo snap install notion-snap
 sudo snap install termius-app
+sudo snap install postman
 
 # Install docker
 sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
