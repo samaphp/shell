@@ -3,6 +3,7 @@
 
 # Basic apps
 sudo apt install git -y
+sudo apt install snapd -y
 sudo snap install slack --classic
 sudo snap install spotify
 sudo snap install phpstorm --classic
