@@ -40,6 +40,9 @@ curl https://build.opensuse.org/projects/home:manuelschneid3r/public_key | sudo 
 sudo apt update
 sudo apt install albert -y
 
+# ulauncher (alternative of Albert)
+# sudo add-apt-repository ppa:agornostal/ulauncher && sudo apt update && sudo apt install ulauncher -y
+
 # Install some useful cli tools
 sudo apt install btop
 sudo apt install netdiscover # USAGE: # sudo netdiscover -r 192.168.0.1/16
