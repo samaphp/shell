@@ -71,6 +71,15 @@ sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 #echo 'alias ll="ls -lha"' >>~/.zshrc
 #sudo chsh -s $(which zsh)
 
+# PHPStorm plugins
+#mkdir /home/config/phpstorm -p
+#cd /home/config/phpstorm
+#wget -q -O copilot.zip - https://plugins.jetbrains.com/files/17718/233164/github-copilot-intellij-1.1.33.1980.zip?updateId=233164&pluginId=17718&family=INTELLIJ
+# drupal symfony bridge
+# drupal 8 namespace detector
+# php annotations
+# symfony support
+
 ## Remove docker
 # sudo apt-get purge -y docker docker.io
 # sudo apt-get autoremove -y --purge docker docker.io
