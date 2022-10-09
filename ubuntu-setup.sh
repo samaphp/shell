@@ -108,4 +108,7 @@ sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 # change (Move to workspace below to: Ctrl+Alt+Down)
 # change (Move window to lower workspace to: Ctrl+Alt+Shift+Down)
 
+# disable avahi-daemon
+#sudo systemctl disable avahi-daemon
+
 echo "██████ You may need to reboot your machine to make Lando work properly ██████"
