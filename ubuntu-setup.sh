@@ -104,4 +104,8 @@ sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 # Add Arabic keyboard
 # Super key shortcut, to search for all applications
 
+# Keyboard shortcuts changes
+# change (Move to workspace below to: Ctrl+Alt+Down)
+# change (Move window to lower workspace to: Ctrl+Alt+Shift+Down)
+
 echo "██████ You may need to reboot your machine to make Lando work properly ██████"
