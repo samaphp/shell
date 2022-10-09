@@ -107,6 +107,7 @@ sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 # Keyboard shortcuts changes
 # change (Move to workspace below to: Ctrl+Alt+Down)
 # change (Move window to lower workspace to: Ctrl+Alt+Shift+Down)
+# change (Move window to leftward monitor to: Ctrl+Shift+left)
 
 # disable avahi-daemon
 #sudo systemctl disable avahi-daemon
