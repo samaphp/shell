@@ -19,8 +19,8 @@ adduser "$NEW_USERNAME" sudo >/dev/null
 adduser "$NEW_USERNAME" www-data >/dev/null
 adduser www-data "$NEW_USERNAME" >/dev/null
 apt-get update
-apt-get install composer
-apt install composer
+apt-get install composer -y
+apt install composer -y
 ################
 # Webserver
 # You can clone from the project repo here, if you want to automate app installation
