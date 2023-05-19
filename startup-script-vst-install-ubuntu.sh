@@ -1,4 +1,5 @@
 #!/bin/bash
+# Source (as of 20230520): https://vestacp.com/pub/vst-install-ubuntu.sh
 
 # Vesta Ubuntu installer v.05
 
