@@ -26,3 +26,9 @@ awk '/\/VirtualHost/{print "<IfModule !mod_php8.c>\n<IfModule proxy_fcgi_module>
 # Create php7.4 templates (docroot /web)
 awk '/\/VirtualHost/{print "<IfModule !mod_php7.c>\n<IfModule proxy_fcgi_module>\n    <IfModule setenvif_module>\n        SetEnvIfNoCase ^Authorization$ \"(.+)\" HTTP_AUTHORIZATION=$1\n    </IfModule>\n\n    <FilesMatch \".+\\.ph(ar|p|tml)$\">\n        SetHandler \"proxy:unix:/run/php/php7.4-fpm.sock|fcgi://php74.localhost\"\n    </FilesMatch>\n    <FilesMatch \"^\\.ph(ar|p|ps|tml)$\">\n        Require all denied\n    </FilesMatch>\n</IfModule>\n</IfModule>"}1' /usr/local/vesta/data/templates/web/apache2/default.stpl | sed '/DocumentRoot/c\    DocumentRoot %sdocroot%/web' >> /usr/local/vesta/data/templates/web/apache2/php74.stpl
 awk '/\/VirtualHost/{print "<IfModule !mod_php7.c>\n<IfModule proxy_fcgi_module>\n    <IfModule setenvif_module>\n        SetEnvIfNoCase ^Authorization$ \"(.+)\" HTTP_AUTHORIZATION=$1\n    </IfModule>\n\n    <FilesMatch \".+\\.ph(ar|p|tml)$\">\n        SetHandler \"proxy:unix:/run/php/php7.4-fpm.sock|fcgi://php74.localhost\"\n    </FilesMatch>\n    <FilesMatch \"^\\.ph(ar|p|ps|tml)$\">\n        Require all denied\n    </FilesMatch>\n</IfModule>\n</IfModule>"}1' /usr/local/vesta/data/templates/web/apache2/default.tpl | sed '/DocumentRoot/c\    DocumentRoot %sdocroot%/web' >> /usr/local/vesta/data/templates/web/apache2/php74.tpl
+
+# VestaCP user backup
+#/usr/local/vesta/bin/v-backup-user USERNAME
+# VestaCP user restore
+# You need to be inside /backup to restore a user, otherwise you will get error: Error: invalid backup format
+#/usr/local/vesta/bin/v-restore-user USERNAME USERNAME.2023-05-20_02-31-31.tar
