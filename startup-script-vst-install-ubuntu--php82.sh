@@ -1,0 +1,18 @@
+#!/bin/bash
+# Adding multiple PHP versions: php8.2 and php7.4
+
+apt install software-properties-common
+apt install php8.2 libapache2-mod-php8.2 php7.4 libapache2-mod-php7.4
+a2enmod proxy_fcgi setenvif
+apt install php8.2-fpm php7.4-fpm libapache2-mod-fcgid
+a2enconf php8.2-fpm  php7.4-fpm
+systemctl restart apache2
+#systemctl status php8.2-fpm
+
+# Create php8.2 templates (docroot /web)
+awk '/\/VirtualHost/{print "<IfModule !mod_php8.c>\n<IfModule proxy_fcgi_module>\n    <IfModule setenvif_module>\n        SetEnvIfNoCase ^Authorization$ \"(.+)\" HTTP_AUTHORIZATION=$1\n    </IfModule>\n\n    <FilesMatch \".+\\.ph(ar|p|tml)$\">\n        SetHandler \"proxy:unix:/run/php/php8.2-fpm.sock|fcgi://php82.localhost\"\n    </FilesMatch>\n    <FilesMatch \"^\\.ph(ar|p|ps|tml)$\">\n        Require all denied\n    </FilesMatch>\n</IfModule>\n</IfModule>"}1' /usr/local/vesta/data/templates/web/apache2/default.stpl | sed '/DocumentRoot/c\    DocumentRoot %sdocroot%/web' >> /usr/local/vesta/data/templates/web/apache2/php82.stpl
+awk '/\/VirtualHost/{print "<IfModule !mod_php8.c>\n<IfModule proxy_fcgi_module>\n    <IfModule setenvif_module>\n        SetEnvIfNoCase ^Authorization$ \"(.+)\" HTTP_AUTHORIZATION=$1\n    </IfModule>\n\n    <FilesMatch \".+\\.ph(ar|p|tml)$\">\n        SetHandler \"proxy:unix:/run/php/php8.2-fpm.sock|fcgi://php82.localhost\"\n    </FilesMatch>\n    <FilesMatch \"^\\.ph(ar|p|ps|tml)$\">\n        Require all denied\n    </FilesMatch>\n</IfModule>\n</IfModule>"}1' /usr/local/vesta/data/templates/web/apache2/default.tpl | sed '/DocumentRoot/c\    DocumentRoot %sdocroot%/web' >> /usr/local/vesta/data/templates/web/apache2/php82.tpl
+
+# Create php7.4 templates (docroot /web)
+awk '/\/VirtualHost/{print "<IfModule !mod_php7.c>\n<IfModule proxy_fcgi_module>\n    <IfModule setenvif_module>\n        SetEnvIfNoCase ^Authorization$ \"(.+)\" HTTP_AUTHORIZATION=$1\n    </IfModule>\n\n    <FilesMatch \".+\\.ph(ar|p|tml)$\">\n        SetHandler \"proxy:unix:/run/php/php7.4-fpm.sock|fcgi://php74.localhost\"\n    </FilesMatch>\n    <FilesMatch \"^\\.ph(ar|p|ps|tml)$\">\n        Require all denied\n    </FilesMatch>\n</IfModule>\n</IfModule>"}1' /usr/local/vesta/data/templates/web/apache2/default.stpl | sed '/DocumentRoot/c\    DocumentRoot %sdocroot%/web' >> /usr/local/vesta/data/templates/web/apache2/php74.stpl
+awk '/\/VirtualHost/{print "<IfModule !mod_php7.c>\n<IfModule proxy_fcgi_module>\n    <IfModule setenvif_module>\n        SetEnvIfNoCase ^Authorization$ \"(.+)\" HTTP_AUTHORIZATION=$1\n    </IfModule>\n\n    <FilesMatch \".+\\.ph(ar|p|tml)$\">\n        SetHandler \"proxy:unix:/run/php/php7.4-fpm.sock|fcgi://php74.localhost\"\n    </FilesMatch>\n    <FilesMatch \"^\\.ph(ar|p|ps|tml)$\">\n        Require all denied\n    </FilesMatch>\n</IfModule>\n</IfModule>"}1' /usr/local/vesta/data/templates/web/apache2/default.tpl | sed '/DocumentRoot/c\    DocumentRoot %sdocroot%/web' >> /usr/local/vesta/data/templates/web/apache2/php74.tpl
