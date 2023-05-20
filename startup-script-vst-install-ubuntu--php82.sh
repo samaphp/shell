@@ -1,5 +1,15 @@
 #!/bin/bash
-# Adding multiple PHP versions: php8.2 and php7.4
+# 1. Install VestaCP
+# 1. Adding multiple PHP versions: php8.2 and php7.4
+# 1. Create VestaCP templates for multiple php versions with /web as a docroot
+
+add-apt-repository ppa:ondrej/php
+apt update
+# Install VestaCP
+curl -O https://raw.githubusercontent.com/samaphp/shell/main/startup-script-vst-install-ubuntu.sh
+groupdel admin
+# REPLACE THE OPTION VALUES IN THE NEXT LINE
+bash startup-script-vst-install-ubuntu.sh --email 'MY@EMAIL.HERE' --port 8083 --hostname 'MY.HOSTNAME' --password 'PASSWORD' --vsftpd no --spamassassin no --softaculous no --clamav no --exim no --dovecot no --interactive no
 
 apt install software-properties-common
 apt install php8.2 libapache2-mod-php8.2 php7.4 libapache2-mod-php7.4
