@@ -39,6 +39,9 @@ if [[ "$_route_all" == 'y' ]] ;
 
     echo 'No default route.'
     # It is good to add your manual ip route command here
+    # for OSX mac: sudo route -n add -net TARGETED_IP GATEWAY
+    # for OSX mac for total subnet: sudo route -n add -net IP/32 GATEWAY
+    # for Linux: sudo ip route add TARGETED_IP via GATEWAY
 
 fi
 
