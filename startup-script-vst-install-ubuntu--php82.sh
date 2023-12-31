@@ -32,3 +32,12 @@ awk '/\/VirtualHost/{print "<IfModule !mod_php7.c>\n<IfModule proxy_fcgi_module>
 # VestaCP user restore
 # You need to be inside /backup to restore a user, otherwise you will get error: Error: invalid backup format
 #/usr/local/vesta/bin/v-restore-user USERNAME USERNAME.2023-05-20_02-31-31.tar
+
+#TROUBLESHOOTING
+# # N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+# # N: See apt-secure(8) manpage for repository creation and user configuration details.
+# # Reading package lists... Done
+# # Building dependency tree... Done
+# # Reading state information... Done
+# # Note, selecting 'libext2fs2' instead of 'e2fslibs'
+# .... still working on it.
