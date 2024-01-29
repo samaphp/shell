@@ -27,7 +27,7 @@ sudo rm -rf lando-x64-stable.deb
 sudo usermod -a -G docker $USER $ exit
 lando --channel stable
 
-sudo apt install docker-compose                                                                       6s
+sudo apt install docker-compose
 
 # Install Google Chrome
 sudo apt-get install libxss1 libappindicator1 libindicator7
