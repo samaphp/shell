@@ -11,7 +11,7 @@ sudo flatpak install flathub org.kde.kteatime -y
 #sudo flatpak install flathub com.github.devalien.workspaces -y
 
 # set google chrome as default browser
-xdg-settings set default-web-browser chromium-browser.desktop
+xdg-settings set default-web-browser com.google.Chrome.desktop
 
 # docker
 zypper install -y docker docker-compose docker-compose-switch
