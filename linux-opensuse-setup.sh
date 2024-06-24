@@ -33,3 +33,5 @@ sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 # Install and configure zsh
 # PHPStorm plugins
 # Google Chrome persons
+
+# Postman login crash issue because of SSL certificates: https://www.reddit.com/r/Fedora/comments/16had56/comment/k0p67rd/
