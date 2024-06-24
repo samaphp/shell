@@ -8,6 +8,7 @@ sudo flatpak install flathub io.github.brunofin.Cohesion -y
 sudo flatpak install flathub com.jetbrains.PhpStorm -y
 sudo flatpak install flathub com.getpostman.Postman -y
 sudo flatpak install flathub org.kde.kteatime -y
+flatpak install flathub org.standardnotes.standardnotes -y
 #sudo flatpak install flathub com.github.devalien.workspaces -y
 
 # set google chrome as default browser
