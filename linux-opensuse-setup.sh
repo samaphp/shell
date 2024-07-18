@@ -34,6 +34,9 @@ sudo zypper install snapper
 sudo snapper -c root create-config /
 sudo snapper create --description "first-snapshot"
 
+# update pip
+#python3 -m pip install --upgrade pip
+
 # Install and configure zsh
 # PHPStorm plugins
 # Google Chrome persons
