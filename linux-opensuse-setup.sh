@@ -30,6 +30,10 @@ lando --channel stable
 
 sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
+sudo zypper install snapper
+sudo snapper -c root create-config /
+sudo snapper create --description "first-snapshot"
+
 # Install and configure zsh
 # PHPStorm plugins
 # Google Chrome persons
