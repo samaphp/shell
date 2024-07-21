@@ -40,5 +40,11 @@ sudo snapper create --description "first-snapshot"
 # Install and configure zsh
 # PHPStorm plugins
 # Google Chrome persons
+# Google chat?
+
+# Portainer
+docker volume create portainer_data
+docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
+
 
 # Postman login crash issue because of SSL certificates: https://www.reddit.com/r/Fedora/comments/16had56/comment/k0p67rd/
