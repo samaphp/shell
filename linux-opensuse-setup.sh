@@ -52,6 +52,11 @@ sudo ln -s /usr/lib64/albert/plugins/libwidgetboxmodel.so /usr/lib64/libwidgetbo
 # update pip
 #python3 -m pip install --upgrade pip
 
+# install python3.8 using pyenv
+#zypper install -y pyenv
+#pyenv install 3.8.10 
+#pyenv init
+
 # Install and configure zsh
 # PHPStorm plugins
 # Google Chrome persons
