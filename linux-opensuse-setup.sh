@@ -11,6 +11,8 @@ sudo flatpak install flathub org.kde.kteatime -y
 flatpak install flathub org.standardnotes.standardnotes -y
 #sudo flatpak install flathub com.github.devalien.workspaces -y
 
+zypper install -y zip
+
 # set google chrome as default browser
 xdg-settings set default-web-browser com.google.Chrome.desktop
 
