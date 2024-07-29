@@ -34,6 +34,14 @@ sudo zypper install snapper
 sudo snapper -c root create-config /
 sudo snapper create --description "first-snapshot"
 
+# install zsh
+zypper install -y zsh
+#git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+#echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >> ~/.zshrc
+#git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+#echo 'source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh' >> ~/.zshrc
+#sudo chsh -s $(which zsh)
+
 # Install Albert launcher
 sudo zypper install albert
 sudo ln -s /usr/lib64/albert/libalbert.so /usr/lib64/libalbert.so
