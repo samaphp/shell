@@ -38,6 +38,7 @@ sudo snapper create --description "first-snapshot"
 sudo zypper install albert
 sudo ln -s /usr/lib64/albert/libalbert.so /usr/lib64/libalbert.so
 sudo ln -s /usr/lib64/albert/libxdg.so /usr/lib64/libxdg.so
+# search for lib files: sudo find / -name "libalbert.so" 2>/dev/null
 
 # update pip
 #python3 -m pip install --upgrade pip
