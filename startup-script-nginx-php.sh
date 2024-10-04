@@ -108,7 +108,7 @@ sudo add-apt-repository ppa:ondrej/php
 apt install php8.2-{cli,fpm,mysqlnd,pdo,xml,curl,dom,exif,fileinfo,gd,iconv,mbstring,phar,xml} -y
 sed -i -e 's/pm.max_children = 5$/pm.max_children = 50/g' /etc/php/8.2/fpm/pool.d/www.conf
 sed -i -e 's/pm.max_spare_servers = 3$/pm.max_spare_servers = 30/g' /etc/php/8.2/fpm/pool.d/www.conf
-sed -i -e 's/upload_max_filesize = 2M$/upload_max_filesize = 80M/g' /etc/php/8.2/fpm/php.ini
-sed -i -e 's/post_max_size = 8M$/post_max_size = 80M/g' /etc/php/8.2/fpm/php.ini
+sed -i -e 's/upload_max_filesize = 2M$/upload_max_filesize = 8M/g' /etc/php/8.2/fpm/php.ini
+sed -i -e 's/post_max_size = 8M$/post_max_size = 8M/g' /etc/php/8.2/fpm/php.ini
 sed -i -e 's/;max_input_vars = 1000$/max_input_vars = 10000/g' /etc/php/8.2/fpm/php.ini
 systemctl restart php8.2-fpm.service
