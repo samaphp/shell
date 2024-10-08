@@ -14,3 +14,4 @@ wget https://raw.githubusercontent.com/nvim-lua/kickstart.nvim/refs/heads/master
 # :Mason
 # Ctrl+F
 # php
+# Theme https://github.com/morhetz/gruvbox
