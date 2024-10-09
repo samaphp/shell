@@ -75,5 +75,14 @@ export LC_ALL=en_US.UTF-8
 docker volume create portainer_data
 docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce:latest
 
-
+# install ripgrep
+#Leap 15.6
+#sudo zypper addrepo https://download.opensuse.org/repositories/utilities/15.6/utilities.repo
+#Leap 15.6
+#sudo zypper addrepo https://download.opensuse.org/repositories/utilities/15.5/utilities.repo
+#Tumbleweed
+#sudo zypper addrepo https://download.opensuse.org/repositories/utilities/openSUSE_Tumbleweed/utilities.repo
+# then:
+#sudo zypper refresh
+#sudo zypper install ripgrep
 # Postman login crash issue because of SSL certificates: https://www.reddit.com/r/Fedora/comments/16had56/comment/k0p67rd/
