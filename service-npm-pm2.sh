@@ -12,3 +12,8 @@ nvm install node
 npm install pm2 -g
 
 # pm2 start "npm run start" --name=mysite
+# If using Apache:
+# sudo a2enmod proxy
+# sudo a2enmod proxy_http
+# cd /var/www/html/project/
+# pm2 start "npm run start" --name=myproject
