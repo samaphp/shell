@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script for Linux-NGINX-PHP only.
+# Script for Linux-NGINX-PHP only. debian
 
 WEBSITE="example.com"
 NEW_USERNAME="username"
