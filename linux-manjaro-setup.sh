@@ -27,6 +27,7 @@ yay -S albert --noconfirm
 yay -S slack-desktop --noconfirm
 # Install Visual Studio Code (via AUR) and setup required plugins (cline?)
 yay -S visual-studio-code-bin --noconfirm
+code --install-extension saoudrizwan.claude-dev
 yay -S phpstorm --noconfirm
 yay -S phpstorm-jre --noconfirm # phpstorm own JRE bundle, required as Java runtime
 
