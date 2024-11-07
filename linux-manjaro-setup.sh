@@ -30,6 +30,7 @@ yay -S visual-studio-code-bin --noconfirm
 code --install-extension saoudrizwan.claude-dev
 yay -S phpstorm --noconfirm
 yay -S phpstorm-jre --noconfirm # phpstorm own JRE bundle, required as Java runtime
+yay -S albert --noconfirm
 
 # Install Google Chrome (via AUR)
 yay -S --noconfirm google-chrome
