@@ -10,6 +10,7 @@ ZSH_VERSION="5.9"  # Update this to the latest version if needed
 ZSH_TAR="zsh-$ZSH_VERSION.tar.xz"
 ZSH_URL="https://sourceforge.net/projects/zsh/files/zsh/$ZSH_VERSION/$ZSH_TAR/download"
 BUILD_DIR="/tmp/zsh-build"
+ZSH_AUTOSUGGESTIONS_DIR="~/.zsh/zsh-autosuggestions"
 
 # Function to check for required commands
 function check_command() {
@@ -155,12 +156,7 @@ fi
 echo "Zsh $ZSH_VERSION and zsh-autosuggestions have been installed and configured successfully!"
 
 # Ensure Zsh is listed in /etc/shells
-if ! grep -Fxq "$ZSH_PATH" /etc/shells; then
-    echo "Adding $ZSH_PATH to /etc/shells..."
-    echo "$ZSH_PATH" | sudo tee -a /etc/shells
-else
-    echo "$ZSH_PATH is already listed in /etc/shells."
-fi
+echo "/usr/local/bin/zsh" | sudo tee -a /etc/shells
 
 # Set Zsh as the default shell
 echo "Setting Zsh as the default shell..."
