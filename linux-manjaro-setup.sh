@@ -37,6 +37,9 @@ yay -S --noconfirm google-chrome
 
 sudo pacman -S gnome-tweaks
 
+# Run albert on startup
+ln -s /usr/share/applications/albert.desktop ~/.config/autostart/
+
 # Install Docker
 sudo pacman -S --noconfirm docker
 sudo systemctl start docker
