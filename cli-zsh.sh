@@ -94,7 +94,7 @@ echo "Automating Zsh configuration..."
 
 # Define default Zsh configuration content
 ZSHRC_CONTENT='
-# Lines configured by install script
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Set prompt
 #PROMPT="%n@%m %1~ %# "
