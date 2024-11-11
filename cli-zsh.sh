@@ -146,6 +146,14 @@ fi
 
 echo "Zsh $ZSH_VERSION and zsh-autosuggestions have been installed and configured successfully!"
 
+# Ensure Zsh is listed in /etc/shells
+if ! grep -Fxq "$ZSH_PATH" /etc/shells; then
+    echo "Adding $ZSH_PATH to /etc/shells..."
+    echo "$ZSH_PATH" | sudo tee -a /etc/shells
+else
+    echo "$ZSH_PATH is already listed in /etc/shells."
+fi
+
 # Set Zsh as the default shell
 echo "Setting Zsh as the default shell..."
 chsh -s /usr/local/bin/zsh
