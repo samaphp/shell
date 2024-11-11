@@ -130,6 +130,7 @@ bindkey "^[[H" beginning-of-line      # Home key moves to the beginning of the l
 bindkey "^[[F" end-of-line            # End key moves to the end of the line
 bindkey "^[[1~" beginning-of-line     # Alternative Home key
 bindkey "^[[4~" end-of-line           # Alternative End key
+bindkey "^[[3~" delete-char           # Del key deletes the character under the cursor
 '
 
 # Create default Zsh configuration files if they don't exist
