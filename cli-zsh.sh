@@ -119,6 +119,17 @@ setopt SHARE_HISTORY
 # Load all plugins (if any)
 # Add your plugins below
 alias ll="ls -laht"
+
+# Configure WORDCHARS to exclude "/"
+WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+
+# Key bindings for word navigation and line control
+bindkey "^[[1;5D" backward-word       # Ctrl+Left for moving one word back
+bindkey "^[[1;5C" forward-word        # Ctrl+Right for moving one word forward
+bindkey "^[[H" beginning-of-line      # Home key moves to the beginning of the line
+bindkey "^[[F" end-of-line            # End key moves to the end of the line
+bindkey "^[[1~" beginning-of-line     # Alternative Home key
+bindkey "^[[4~" end-of-line           # Alternative End key
 '
 
 # Create default Zsh configuration files if they don't exist
