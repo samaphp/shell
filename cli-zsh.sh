@@ -97,7 +97,9 @@ ZSHRC_CONTENT='
 # Lines configured by install script
 
 # Set prompt
-PROMPT="%n@%m %1~ %# "
+#PROMPT="%n@%m %1~ %# "
+PROMPT="%F{blue}%~%f %F{green}❯%f "    # Current directory in blue, followed by a green arrow
+RPROMPT="%F{yellow}%n@%m%f"            # Right prompt with username and hostname in yellow
 
 # Enable command correction
 setopt CORRECT
@@ -116,7 +118,8 @@ setopt SHARE_HISTORY
 
 # Load all plugins (if any)
 # Add your plugins below
-#'
+alias ll="ls -laht"
+'
 
 # Create default Zsh configuration files if they don't exist
 if [ ! -f "$HOME/.zshrc" ]; then
