@@ -10,7 +10,7 @@ ZSH_VERSION="5.9"  # Update this to the latest version if needed
 ZSH_TAR="zsh-$ZSH_VERSION.tar.xz"
 ZSH_URL="https://sourceforge.net/projects/zsh/files/zsh/$ZSH_VERSION/$ZSH_TAR/download"
 BUILD_DIR="/tmp/zsh-build"
-ZSH_AUTOSUGGESTIONS_DIR="~/.zsh/zsh-autosuggestions"
+ZSH_AUTOSUGGESTIONS_DIR="$HOME/.zsh/zsh-autosuggestions"
 
 # Function to check for required commands
 function check_command() {
