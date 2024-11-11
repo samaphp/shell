@@ -132,6 +132,17 @@ for file in .zshenv .zprofile .zlogin .zlogout; do
     fi
 done
 
+# Install zsh-autosuggestions plugin
+echo "Installing zsh-autosuggestions plugin..."
+if [ ! -d "$ZSH_AUTOSUGGESTIONS_DIR" ]; then
+    mkdir -p "${ZSH_AUTOSUGGESTIONS_DIR%/*}"
+    git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_AUTOSUGGESTIONS_DIR"
+else
+    echo "zsh-autosuggestions already installed."
+fi
+
+echo "Zsh $ZSH_VERSION and zsh-autosuggestions have been installed and configured successfully!"
+
 # Set Zsh as the default shell
 echo "Setting Zsh as the default shell..."
 chsh -s /usr/local/bin/zsh
