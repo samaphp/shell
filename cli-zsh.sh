@@ -3,11 +3,7 @@
 # this script will install the zsh from source regardless if the linux distribution
 
 #Requirements for ubuntu:
-#sudo apt-get install libpcre3-dev
-#sudo apt-get install libreadline-dev
-#sudo apt-get install build-essential
-#sudo apt-get install libncurses5-dev libncursesw5-dev
-#sudo apt-get install autoconf
+#sudo apt-get install libpcre3-dev libreadline-dev build-essential libncurses5-dev libncursesw5-dev autoconf
 
 # Variables
 ZSH_VERSION="5.9"  # Update this to the latest version if needed
