@@ -75,6 +75,10 @@ yay -S appimagelauncher
 #- Get my Note backup
 #- enable night light
 
+# Install java maven
+#sudo pacman -S jdk-openjdk maven
+#echo 'export JAVA_HOME=/usr/lib/jvm/java-22-openjdk' >> ~/.bashrc
+
 # Clean up
 sudo pacman -Rns $(pacman -Qdtq) --noconfirm
 
