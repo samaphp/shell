@@ -1,5 +1,6 @@
 #!/bin/bash
 # some checks on the server after migration to a new data center to make sure everything is working as expected
+# @TODO: Check if the same crontab entries are exists on the new server
 
 check_apache() {
     response_80=$(curl -s http://localhost:80)
