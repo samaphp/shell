@@ -29,6 +29,7 @@ yay -S slack-desktop --noconfirm
 yay -S visual-studio-code-bin --noconfirm
 code --install-extension saoudrizwan.claude-dev
 code --install-extension mcright.auto-save
+echo '[{"key":"ctrl+shift+t","command":"-workbench.action.reopenClosedEditor"},{"key":"ctrl+shift+t","command":"workbench.action.terminal.toggleTerminal"}]' > ~/.config/Code/User/keybindings.json
 yay -S phpstorm --noconfirm
 yay -S phpstorm-jre --noconfirm # phpstorm own JRE bundle, required as Java runtime
 yay -S albert --noconfirm
