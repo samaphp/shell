@@ -1,6 +1,7 @@
 #!/bin/bash
 # Script for Linux-NGINX-PHP only. debian
 # @TODO: Need to add SSL support using certbot.
+# @TODO: uncomment `# server_tokens off;`line from this file /etc/nginx/nginx.conf
 
 WEBSITE="example.com"
 
