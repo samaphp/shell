@@ -85,3 +85,5 @@ yay -S appimagelauncher
 sudo pacman -Rns $(pacman -Qdtq) --noconfirm
 
 echo "\nSetup complete! You may need to log out or restart for some changes to take effect."
+
+# Update Google chrome: `yay -S google-chrome` then choose [N]one for the next questions.
