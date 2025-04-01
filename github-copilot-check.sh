@@ -10,6 +10,7 @@ domains=(
   "origin-tracker.githubusercontent.com"
   "githubcopilot.com"
   "copilot-proxy.githubusercontent.com"
+  "proxy.individual.githubcopilot.com"
 )
 
 # Function to check domain status
@@ -26,3 +27,8 @@ for domain in "${domains[@]}"; do
     echo "[FAIL] $domain failed (timeout). You can route the ip manually, check here: https://dnschecker.org/domain-ip-lookup.php?query=$domain&dns=google"
   fi
 done
+
+# tail -f /home/$USER/.cache/JetBrains/PhpStorm2024.3/log/idea.log
+# Error log: com.github.copilot.lang.agent.rpc.JsonRpcErrorException: Request was canceled, request id: 55, error code: -32800
+# Solution: Check your connection to the GitHub Copilot service domains (e.g., https://proxy.individual.githubcopilot.com).  
+# If you have network constraints (e.g., VPN, proxy, firewall), you may need to manually configure routing or whitelist these domains.
