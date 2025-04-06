@@ -64,6 +64,8 @@ sudo bash NVIDIA-Linux-x86_64-510.68.02.run
 sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
 # gnome-shell-extension-pop-shell
+# sudo pamac install gnome-shell-extension-pop-shell
+# ubuntu: https://www.perplexity.ai/search/i-need-to-install-this-gnome-s-tGm17QzdRmSUXVpsVOHE1A
 
 # Install and configure zsh
 #sudo apt install zsh -y
