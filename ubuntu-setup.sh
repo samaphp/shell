@@ -63,6 +63,8 @@ sudo bash NVIDIA-Linux-x86_64-510.68.02.run
 # Remove sudo password
 sudo sh -c 'echo "$USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
+# gnome-shell-extension-pop-shell
+
 # Install and configure zsh
 #sudo apt install zsh -y
 #git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
