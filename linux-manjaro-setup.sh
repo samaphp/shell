@@ -71,6 +71,8 @@ yay -S appimagelauncher
 ## chmod +x ./DeskTime-x86_64.AppImage
 # Now run ./DeskTime-x86_64.AppImage --appimage-extract-and-run
 
+sudo pacman -S nvtop
+
 #- add Google chrome person (elc)
 #- login into Gitlab
 #- Set system Arabic font
