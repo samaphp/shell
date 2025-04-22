@@ -2,6 +2,12 @@
 # setup neovim
 sudo zypper install cmake
 
+# Install clipboard libraries for Neovim to support system wide clipboard
+# Arch:
+# echo $XDG_SESSION_TYPE
+# x11: sudo pacman -S xclip
+# wayland: sudo pacman -S wl-clipboard
+
 git clone https://github.com/neovim/neovim.git
 cd neovim
 make CMAKE_BUILD_TYPE=RelWithDebInfo
