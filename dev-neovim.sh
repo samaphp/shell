@@ -15,3 +15,10 @@ wget https://raw.githubusercontent.com/nvim-lua/kickstart.nvim/refs/heads/master
 # Ctrl+F
 # php
 # Theme https://github.com/morhetz/gruvbox
+
+# starters
+# https://github.com/nvim-lua/kickstart.nvim # build everything, full control (Very easy to customize)
+# https://www.lazyvim.org/ # clean, dev-friendly. Effortless to customize and maintain (Very easy to customize)
+# https://astronvim.com/ # opinionated, full-featured. feels like VSCode (Moderate to customize)
+# https://www.lunarvim.org/ # Heavy, but everything’s already wired. feels like VSCode (Moderate to customize)
+# https://nvchad.com/ # fast, and visually slick (Moderate to customize)
