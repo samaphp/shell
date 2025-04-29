@@ -25,6 +25,7 @@ echo "CPU Load      : $(cut -d ' ' -f1-3 /proc/loadavg)"
 echo "Memory        : $(free -h | awk '/Mem:/ {printf "%s used / %s total (%.1f%%)\n", $3, $2, $3/$2 * 100}')"
 echo "Swap          : $(free -h | awk '/Swap:/ {printf "%s used / %s total\n", $3, $2}')"
 echo "Disk (/)      : $(df -h / | awk 'NR==2 {print $3 " used / " $2 " total (" $5 " used)"}')"
+[ -f /var/run/reboot-required ] && echo -e "Reboot Needed : ${RED}Yes${NC}" || echo "Reboot Needed : No"
 
 # CPU temperature (requires lm_sensors)
 if command -v sensors >/dev/null 2>&1; then
@@ -44,12 +45,14 @@ for svc in "${SERVICES[@]}"; do
   printf "  * %-20s [%b%s%b]\n" "$svc" "$color" "$status" "$NC"
 done
 
-# Top 3 memory processes
+echo ""
+echo -e "${YELLOW}⚙️  Top CPU Processes${NC}"
+ps -eo pid,comm,%cpu --sort=-%cpu | head -n 4
+
 echo ""
 echo -e "${YELLOW}📈 Top Memory Processes${NC}"
 ps -eo pid,comm,%mem --sort=-%mem | head -n 4
 
-# Recently failed services
 echo ""
 echo -e "${YELLOW}❌ Failed Services (if any)${NC}"
 systemctl --failed --no-legend || echo "  None"
