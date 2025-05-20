@@ -59,6 +59,9 @@ sudo pacman -S --noconfirm htop neofetch btop
 # install fonts
 sudo pacman -S noto-fonts
 
+# Disable WS-Discovery daemon `Web Services for Devices Daemon` Used by Samba to announce or discover Windows-like file shares via WS-Discovery.
+sudo systemctl disable --now wsdd
+
 # Desktime installation
 ## install some libraries
 sudo pacman -S libappindicator-gtk3 libnotify
