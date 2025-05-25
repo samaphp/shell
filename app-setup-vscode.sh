@@ -32,6 +32,7 @@ code --install-extension saoudrizwan.claude-dev
 
 # Themes
 code --install-extension zhuangtongfa.Material-theme # PHPStorm-like
+# grep -q '"workbench.colorTheme"' ~/.config/Code/User/settings.json || sed -i '1a\  "workbench.colorTheme": "One Dark Pro",' ~/.config/Code/User/settings.json
 
 # Extra
 #code --install-extension ms-azuretools.vscode-docker
