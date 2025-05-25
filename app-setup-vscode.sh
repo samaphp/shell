@@ -30,6 +30,16 @@ code --install-extension github.copilot
 code --install-extension github.copilot-chat
 code --install-extension saoudrizwan.claude-dev
 
+# Themes
+code --install-extension zhuangtongfa.Material-theme # PHPStorm-like
+
 # Extra
 #code --install-extension ms-azuretools.vscode-docker
 #code --install-extension humao.rest-client
+#code --install-extension Shan.code-settings-sync # Workspace Configuration Sync
+
+# Vim experience
+#code --install-extension vscodevim.vim
+#code --install-extension VSpaceCode.whichkey
+#code --install-extension vspacecode.vspacecode
+#code --install-extension asvetliakov.vscode-neovim
