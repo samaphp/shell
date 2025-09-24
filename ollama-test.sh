@@ -9,7 +9,11 @@ ollama pull openhermes
 # Now the open web ui is accessible on http://127.0.0.1:8080/ 
 
 
-
+## You may want to enable Flash Attention:
+# OLLAMA_FLASH_ATTENTION=true
+## Also, set the quantization type for the K/V cache
+# OLLAMA_KV_CACHE_TYPE=16
+## Source: https://docs.ollama.com/faq#how-can-i-enable-flash-attention%3F
 
 # -------
 
