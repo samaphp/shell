@@ -2,12 +2,18 @@
 
 # SSL Certificate Expiration Checker
 # Reads domains from a .txt file and reports SSL certificate expiration dates
+# Also checks if the certificate chain is complete (important for API integrations)
 #
 # File Format (domains.txt):
 #   One domain per line
 #   Optionally specify port with domain:port format (default is 443)
 #   Lines starting with # are comments and will be skipped
 #   Empty lines are ignored
+#
+# Chain Validation:
+#   - OK        = Full certificate chain present (works for browsers and APIs)
+#   - MISSING   = No intermediate certificates (works in browsers, fails in APIs)
+#   - INCOMPLETE = Partial chain (may cause compatibility issues)
 #
 # Examples:
 #   example.com
@@ -68,6 +74,8 @@ VALID=0
 WARNING=0
 EXPIRED=0
 INVALID=0
+CHAIN_OK=0
+CHAIN_ISSUES=0
 EXPIRED_DOMAINS=()
 
 # Function to get SSL expiration date
@@ -77,6 +85,42 @@ get_cert_expiry() {
     
     timeout "$TIMEOUT" openssl s_client -connect "$domain:$port" -servername "$domain" </dev/null 2>/dev/null | \
     openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2 || echo "ERROR"
+}
+
+# Function to check if certificate chain is complete
+check_cert_chain() {
+    local domain="$1"
+    local port="${2:-443}"
+    local cert_file="$3"
+    
+    # Get the full certificate chain from the server and capture verification result
+    timeout "$TIMEOUT" openssl s_client -connect "$domain:$port" -servername "$domain" </dev/null 2>/dev/null > "$cert_file" || return 1
+    
+    # Extract the verify return code from openssl output
+    local verify_code=$(grep "Verify return code" "$cert_file" 2>/dev/null | grep -oP '(?<=code: )\d+' || echo "1")
+    
+    case "$verify_code" in
+        0)
+            # Code 0 = Chain is valid and complete
+            echo "OK"
+            return 0
+            ;;
+        20)
+            # Code 20 = Unable to get local issuer certificate (missing chain)
+            echo "MISSING"
+            return 1
+            ;;
+        *)
+            # Other codes = Various chain issues
+            local cert_count=$(grep -c "^-----BEGIN CERTIFICATE-----$" "$cert_file" 2>/dev/null || echo "0")
+            if [[ "$cert_count" -lt 2 ]]; then
+                echo "MISSING"
+            else
+                echo "INCOMPLETE"
+            fi
+            return 1
+            ;;
+    esac
 }
 
 # Function to calculate days until expiration
@@ -101,8 +145,8 @@ days_until_expiry() {
 # Print header (only in normal mode)
 if [[ "$CHECK_MODE" != "true" ]]; then
     echo ""
-    printf "%-40s %-25s %-15s %-10s\n" "Domain" "Expiration Date" "Days Left" "Status"
-    printf "%-40s %-25s %-15s %-10s\n" "$(printf '=%.0s' {1..40})" "$(printf '=%.0s' {1..25})" "$(printf '=%.0s' {1..15})" "$(printf '=%.0s' {1..10})"
+    printf "%-40s %-25s %-15s %-10s %-12s\n" "Domain" "Expiration Date" "Days Left" "Status" "Chain"
+    printf "%-40s %-25s %-15s %-10s %-12s\n" "$(printf '=%.0s' {1..40})" "$(printf '=%.0s' {1..25})" "$(printf '=%.0s' {1..15})" "$(printf '=%.0s' {1..10})" "$(printf '=%.0s' {1..12})"
 fi
 
 # Read domains from file and check certificates
@@ -125,15 +169,21 @@ while IFS= read -r line; do
     
     ((TOTAL++))
     
+    # Create temporary certificate file
+    CERT_CHAIN_TMP=$(mktemp)
+    
     # Get certificate expiration date
     expiry_date=$(get_cert_expiry "$host" "$port")
+    
+    # Check certificate chain
+    chain_status=$(check_cert_chain "$host" "$port" "$CERT_CHAIN_TMP")
     
     if [[ "$expiry_date" == "ERROR" ]] || [[ -z "$expiry_date" ]]; then
         ((INVALID++))
         EXPIRED_DOMAINS+=("$domain")
         
         if [[ "$CHECK_MODE" != "true" ]]; then
-            printf "%-40s %-25s %-15s ${RED}%-10s${NC}\n" "$domain" "Could not retrieve" "N/A" "ERROR"
+            printf "%-40s %-25s %-15s ${RED}%-10s${NC} %-12s\n" "$domain" "Could not retrieve" "N/A" "ERROR" "N/A"
         fi
     else
         days_left=$(days_until_expiry "$expiry_date")
@@ -143,26 +193,41 @@ while IFS= read -r line; do
             ((INVALID++))
             EXPIRED_DOMAINS+=("$domain")
             if [[ "$CHECK_MODE" != "true" ]]; then
-                printf "%-40s %-25s %-15s ${RED}%-10s${NC}\n" "$domain" "$expiry_date" "N/A" "ERROR"
+                printf "%-40s %-25s %-15s ${RED}%-10s${NC} %-12s\n" "$domain" "$expiry_date" "N/A" "ERROR" "$chain_status"
             fi
         elif [[ $days_left -lt 0 ]]; then
             ((EXPIRED++))
             EXPIRED_DOMAINS+=("$domain")
             if [[ "$CHECK_MODE" != "true" ]]; then
-                printf "%-40s %-25s %-15s ${RED}%-10s${NC}\n" "$domain" "$expiry_date" "$days_left" "EXPIRED"
+                if [[ "$chain_status" == "OK" ]]; then
+                    printf "%-40s %-25s %-15s ${RED}%-10s${NC} ${GREEN}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "EXPIRED" "$chain_status"
+                else
+                    printf "%-40s %-25s %-15s ${RED}%-10s${NC} ${RED}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "EXPIRED" "$chain_status"
+                fi
             fi
         elif [[ $days_left -lt 30 ]]; then
             ((WARNING++))
             if [[ "$CHECK_MODE" != "true" ]]; then
-                printf "%-40s %-25s %-15s ${YELLOW}%-10s${NC}\n" "$domain" "$expiry_date" "$days_left" "WARNING"
+                if [[ "$chain_status" == "OK" ]]; then
+                    printf "%-40s %-25s %-15s ${YELLOW}%-10s${NC} ${GREEN}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "WARNING" "$chain_status"
+                else
+                    printf "%-40s %-25s %-15s ${YELLOW}%-10s${NC} ${RED}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "WARNING" "$chain_status"
+                fi
             fi
         else
             ((VALID++))
             if [[ "$CHECK_MODE" != "true" ]]; then
-                printf "%-40s %-25s %-15s ${GREEN}%-10s${NC}\n" "$domain" "$expiry_date" "$days_left" "VALID"
+                if [[ "$chain_status" == "OK" ]]; then
+                    printf "%-40s %-25s %-15s ${GREEN}%-10s${NC} ${GREEN}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "VALID" "$chain_status"
+                else
+                    printf "%-40s %-25s %-15s ${GREEN}%-10s${NC} ${RED}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "VALID" "$chain_status"
+                fi
             fi
         fi
     fi
+    
+    # Clean up temp file
+    rm -f "$CERT_CHAIN_TMP"
     
 done < "$CERT_FILE"
 
@@ -189,6 +254,11 @@ else
     echo -e "${YELLOW}Warning (< 30 days): $WARNING${NC}"
     echo -e "${RED}Expired: $EXPIRED${NC}"
     echo -e "${RED}Error/Invalid: $INVALID${NC}"
+    echo ""
+    echo "Note: The 'Chain' column shows if the SSL certificate chain is complete:"
+    echo -e "  ${GREEN}OK${NC}        - Full certificate chain present (works for APIs/integrations)"
+    echo -e "  ${RED}MISSING${NC}    - No intermediate certificates (browser only, API will fail)"
+    echo -e "  ${RED}INCOMPLETE${NC} - Partial chain (may have compatibility issues)"
     echo "========================================="
     echo ""
 fi
