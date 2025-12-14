@@ -1,7 +1,19 @@
 #!/usr/bin/env bash
 
 # SSL Certificate Expiration Checker
-# Reads domains from a file and reports SSL certificate expiration dates
+# Reads domains from a .txt file and reports SSL certificate expiration dates
+#
+# File Format (domains.txt):
+#   One domain per line
+#   Optionally specify port with domain:port format (default is 443)
+#   Lines starting with # are comments and will be skipped
+#   Empty lines are ignored
+#
+# Examples:
+#   example.com
+#   google.com:443
+#   api.example.com:8443
+#   # This is a comment
 
 # Colors for output
 RED='\033[0;31m'
@@ -18,8 +30,18 @@ CERT_FILE=""
 if [[ $# -eq 0 ]]; then
     echo "Usage: $0 <domains_file> [-c|--check]"
     echo ""
+    echo "Arguments:"
+    echo "  <domains_file>  A .txt file containing one domain per line"
+    echo ""
     echo "Options:"
-    echo "  -c, --check    Check mode: outputs 'OK' or list of expired domains"
+    echo "  -c, --check     Check mode: outputs 'OK' or list of expired domains"
+    echo ""
+    echo "File Format Example (domains.txt):"
+    echo "  example.com"
+    echo "  google.com"
+    echo "  github.com:8443"
+    echo "  # This is a comment and will be skipped"
+    echo ""
     exit 1
 fi
 
