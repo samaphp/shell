@@ -40,7 +40,7 @@ if [[ $# -eq 0 ]]; then
     echo "  <domains_file>  A .txt file containing one domain per line"
     echo ""
     echo "Options:"
-    echo "  -c, --check     Check mode: outputs 'OK' or list of expired domains"
+    echo "  -c, --check     Check mode: outputs 'OK' or list of domains with SSL/chain issues"
     echo ""
     echo "File Format Example (domains.txt):"
     echo "  example.com"
@@ -77,6 +77,7 @@ INVALID=0
 CHAIN_OK=0
 CHAIN_ISSUES=0
 EXPIRED_DOMAINS=()
+CHAIN_FAILED_DOMAINS=()
 
 # Function to get SSL expiration date
 get_cert_expiry() {
@@ -142,11 +143,20 @@ days_until_expiry() {
     echo "$days_diff"
 }
 
-# Print header (only in normal mode)
-if [[ "$CHECK_MODE" != "true" ]]; then
+# Track if we need to print header for check mode with failures
+PRINT_HEADER=false
+
+# Print header (for normal mode or check mode with failures)
+print_table_header() {
     echo ""
     printf "%-40s %-25s %-15s %-10s %-12s\n" "Domain" "Expiration Date" "Days Left" "Status" "Chain"
     printf "%-40s %-25s %-15s %-10s %-12s\n" "$(printf '=%.0s' {1..40})" "$(printf '=%.0s' {1..25})" "$(printf '=%.0s' {1..15})" "$(printf '=%.0s' {1..10})" "$(printf '=%.0s' {1..12})"
+    PRINT_HEADER=true
+}
+
+# Only print header immediately in normal mode
+if [[ "$CHECK_MODE" != "true" ]]; then
+    print_table_header
 fi
 
 # Read domains from file and check certificates
@@ -180,7 +190,7 @@ while IFS= read -r line; do
     
     if [[ "$expiry_date" == "ERROR" ]] || [[ -z "$expiry_date" ]]; then
         ((INVALID++))
-        EXPIRED_DOMAINS+=("$domain")
+        EXPIRED_DOMAINS+=("$domain|Could not retrieve|N/A|ERROR|N/A")
         
         if [[ "$CHECK_MODE" != "true" ]]; then
             printf "%-40s %-25s %-15s ${RED}%-10s${NC} %-12s\n" "$domain" "Could not retrieve" "N/A" "ERROR" "N/A"
@@ -191,13 +201,13 @@ while IFS= read -r line; do
         if [[ "$days_left" == "0" ]]; then
             # Date parsing failed
             ((INVALID++))
-            EXPIRED_DOMAINS+=("$domain")
+            EXPIRED_DOMAINS+=("$domain|$expiry_date|N/A|ERROR|$chain_status")
             if [[ "$CHECK_MODE" != "true" ]]; then
                 printf "%-40s %-25s %-15s ${RED}%-10s${NC} %-12s\n" "$domain" "$expiry_date" "N/A" "ERROR" "$chain_status"
             fi
         elif [[ $days_left -lt 0 ]]; then
             ((EXPIRED++))
-            EXPIRED_DOMAINS+=("$domain")
+            EXPIRED_DOMAINS+=("$domain|$expiry_date|$days_left|EXPIRED|$chain_status")
             if [[ "$CHECK_MODE" != "true" ]]; then
                 if [[ "$chain_status" == "OK" ]]; then
                     printf "%-40s %-25s %-15s ${RED}%-10s${NC} ${GREEN}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "EXPIRED" "$chain_status"
@@ -207,6 +217,9 @@ while IFS= read -r line; do
             fi
         elif [[ $days_left -lt 30 ]]; then
             ((WARNING++))
+            if [[ "$chain_status" != "OK" ]]; then
+                CHAIN_FAILED_DOMAINS+=("$domain|$expiry_date|$days_left|WARNING|$chain_status")
+            fi
             if [[ "$CHECK_MODE" != "true" ]]; then
                 if [[ "$chain_status" == "OK" ]]; then
                     printf "%-40s %-25s %-15s ${YELLOW}%-10s${NC} ${GREEN}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "WARNING" "$chain_status"
@@ -216,6 +229,9 @@ while IFS= read -r line; do
             fi
         else
             ((VALID++))
+            if [[ "$chain_status" != "OK" ]]; then
+                CHAIN_FAILED_DOMAINS+=("$domain|$expiry_date|$days_left|VALID|$chain_status")
+            fi
             if [[ "$CHECK_MODE" != "true" ]]; then
                 if [[ "$chain_status" == "OK" ]]; then
                     printf "%-40s %-25s %-15s ${GREEN}%-10s${NC} ${GREEN}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "VALID" "$chain_status"
@@ -233,14 +249,34 @@ done < "$CERT_FILE"
 
 # Output based on mode
 if [[ "$CHECK_MODE" == "true" ]]; then
-    # Check mode: output OK or list of expired domains
-    if [[ $EXPIRED -eq 0 ]] && [[ $INVALID -eq 0 ]]; then
+    # Check mode: output OK or table with failures
+    if [[ $EXPIRED -eq 0 ]] && [[ $INVALID -eq 0 ]] && [[ ${#CHAIN_FAILED_DOMAINS[@]} -eq 0 ]]; then
         echo "OK"
         exit 0
     else
-        for domain in "${EXPIRED_DOMAINS[@]}"; do
-            echo "$domain"
+        # Print header and failed domains
+        print_table_header
+        
+        # Print expired domains
+        for item in "${EXPIRED_DOMAINS[@]}"; do
+            IFS='|' read -r domain expiry_date days_left status chain_status <<< "$item"
+            if [[ "$chain_status" == "OK" ]]; then
+                printf "%-40s %-25s %-15s ${RED}%-10s${NC} ${GREEN}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "$status" "$chain_status"
+            else
+                printf "%-40s %-25s %-15s ${RED}%-10s${NC} ${RED}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "$status" "$chain_status"
+            fi
         done
+        
+        # Print domains with chain issues
+        for item in "${CHAIN_FAILED_DOMAINS[@]}"; do
+            IFS='|' read -r domain expiry_date days_left status chain_status <<< "$item"
+            if [[ "$status" == "WARNING" ]]; then
+                printf "%-40s %-25s %-15s ${YELLOW}%-10s${NC} ${RED}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "$status" "$chain_status"
+            else
+                printf "%-40s %-25s %-15s ${GREEN}%-10s${NC} ${RED}%-12s${NC}\n" "$domain" "$expiry_date" "$days_left" "$status" "$chain_status"
+            fi
+        done
+        echo ""
         exit 1
     fi
 else
