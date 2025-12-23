@@ -140,3 +140,26 @@ Only after everything passes.
 nano /etc/ssh/sshd_config
 systemctl reload ssh
 ```
+
+---
+
+## Confirmation
+
+This output is the ground truth — not the contents of sshd_config:
+```
+sshd -T | grep -E 'permitrootlogin|passwordauthentication|pubkeyauthentication'
+```
+
+You should see these values:
+```
+permitrootlogin no
+passwordauthentication no
+pubkeyauthentication yes
+```
+
+If you see different values, then run this command and see which file are overriding your values:
+```
+grep -RInH \
+  -E '^\s*(PermitRootLogin|PasswordAuthentication|PubkeyAuthentication)\b' \
+  /etc/ssh/sshd_config.d/
+```
