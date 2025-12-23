@@ -35,10 +35,10 @@ else
   exit 1
 fi
 
-printf "%-19s  %-8s  %-11s  %-8s  %-9s  %-16s\n" \
-  "TIMESTAMP" "USER" "CLIENT_PORT" "ACTIVITY" "STATUS" "SIGNATURE"
-printf "%-19s  %-8s  %-11s  %-8s  %-9s  %-16s\n" \
-  "-------------------" "--------" "-----------" "--------" "---------" "----------------"
+printf "%-25s  %-8s  %-6s  %-8s  %-9s  %-12s\n" \
+  "TIMESTAMP" "USER" "PORT" "ACTIVITY" "STATUS" "SIGNATURE"
+printf "%-19s  %-8s  %-6s  %-8s  %-9s  %-12s\n" \
+  "-------------------------" "--------" "------" "--------" "---------" "------------"
 
 journalctl -u ssh --since "$SINCE" --no-pager -o short-iso | awk -v show_noise="$SHOW_NOISE" '
 {
