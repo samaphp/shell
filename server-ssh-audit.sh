@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Accurate, read-only SSH security report
-# Focused on clarity, correctness, and zero ambiguity
+# Includes concise proof for key decisions
 
 PASS=0
 WARN=0
@@ -67,30 +67,43 @@ systemctl is-active --quiet fail2ban 2>/dev/null \
   || result "Fail2Ban" "INACTIVE" FAIL
 
 if command -v ufw >/dev/null && ufw status | grep -q "Status: active"; then
+  FIREWALL_PRESENT="YES"
   result "Firewall Detected" "YES" WARN
 else
+  FIREWALL_PRESENT="NO"
   result "Firewall Detected" "NO" WARN
 fi
 
-# ---- Exposure analysis (derived, authoritative) ----
+# ---- Exposure analysis (derived) ----
 PUBLIC_LISTEN="NO"
-ss -ltnp 2>/dev/null | grep -qE "(0.0.0.0|::):$PORT.*sshd" && PUBLIC_LISTEN="YES"
+LISTEN_ADDR="$(ss -ltnp 2>/dev/null | grep sshd | grep ":$PORT" | awk '{print $4}' | head -n1)"
+
+if echo "$LISTEN_ADDR" | grep -qE "0.0.0.0|::"; then
+  PUBLIC_LISTEN="YES"
+fi
 
 ACCESS_RESTRICTED="NO"
 grep -Eq "^(AllowUsers|AllowGroups)" /etc/ssh/sshd_config 2>/dev/null && ACCESS_RESTRICTED="YES"
 
 if [[ "$PUBLIC_LISTEN" == "YES" && "$ACCESS_RESTRICTED" == "NO" ]]; then
-  result "SSH Exposure Level" "PUBLIC & UNRESTRICTED" WARN
+  EXPOSURE="PUBLIC & UNRESTRICTED"
+  result "SSH Exposure Level" "$EXPOSURE" WARN
 elif [[ "$PUBLIC_LISTEN" == "YES" && "$ACCESS_RESTRICTED" == "YES" ]]; then
-  result "SSH Exposure Level" "PUBLIC (RESTRICTED)" WARN
+  EXPOSURE="PUBLIC (RESTRICTED)"
+  result "SSH Exposure Level" "$EXPOSURE" WARN
 else
-  result "SSH Exposure Level" "NOT PUBLIC" PASS
+  EXPOSURE="NOT PUBLIC"
+  result "SSH Exposure Level" "$EXPOSURE" PASS
 fi
 
 # ---- Crypto hygiene ----
-grep -Eq "^(Ciphers|MACs|KexAlgorithms)" /etc/ssh/sshd_config 2>/dev/null \
-  && result "Crypto Hardening" "SET" PASS \
-  || result "Crypto Hardening" "NOT SET" WARN
+if grep -Eq "^(Ciphers|MACs|KexAlgorithms)" /etc/ssh/sshd_config 2>/dev/null; then
+  CRYPTO="SET"
+  result "Crypto Hardening" "SET" PASS
+else
+  CRYPTO="NOT SET"
+  result "Crypto Hardening" "NOT SET" WARN
+fi
 
 # ---- Summary ----
 echo
@@ -113,9 +126,18 @@ if (( WARN > 0 )); then
   echo
   echo "RECOMMENDED IMPROVEMENTS"
   echo "-----------------------"
-  [[ "$PORT" == "22" ]] && echo "- Move SSH off port 22"
   [[ "$ACCESS_RESTRICTED" == "NO" ]] && echo "- Restrict SSH by IP or VPN"
-  ! grep -Eq "^(Ciphers|MACs|KexAlgorithms)" /etc/ssh/sshd_config && echo "- Add modern SSH crypto settings"
+  [[ "$CRYPTO" == "NOT SET" ]] && echo "- Add modern SSH crypto settings"
 fi
+
+# ---- Proofs ----
+echo
+echo "EVIDENCE (PROOFS)"
+echo "-----------------"
+
+echo "- SSH listens on: ${LISTEN_ADDR:-unknown}"
+echo "- PermitRootLogin: $ROOT"
+[[ "$FIREWALL_PRESENT" == "YES" ]] && echo "- Firewall status: ufw active" || echo "- Firewall status: not detected"
+[[ "$CRYPTO" == "NOT SET" ]] && echo "- No Ciphers/MACs/KexAlgorithms in sshd_config"
 
 echo
